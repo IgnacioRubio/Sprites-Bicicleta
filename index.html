@@ -1,0 +1,216 @@
+<!DOCTYPE HTML>
+
+<html lang='es'>
+
+<head>
+
+
+	<title>Bici</title>
+	<meta charset='UTF-8'/>
+
+	<script>
+
+		var canvas;
+		var canContext;
+		var img;
+
+		var tSpeed;
+		var tX;
+		var tY;
+
+		var sw = true;
+		var orientado;
+
+		var speed = 1;
+		var speedStep = 1;
+
+		var x = 100;
+		var y = 100;
+
+		window.onload = function()
+		{
+			canvas = document.getElementById("miCanv");
+
+			canContext = canvas.getContext("2d");
+
+			img = document.getElementById("bici_der_1");
+
+			canContext.drawImage(img,x,y);
+
+			window.addEventListener('keydown', doKeyDown, true);
+
+			tSpeed = document.getElementById("spSpeed");
+			tSpeed.innerHTML = speed;
+
+			tX = document.getElementById("spX");
+			tX.innerHTML = x;
+
+			tY = document.getElementById("spY");
+			tY.innerHTML = y;
+		}
+
+		function doKeyDown(e)
+		{
+			
+			//====================
+			//	THE W KEY
+			//====================
+			if (e.keyCode == 87 || e.keyCode == 38) {
+				if(y>0)
+				{
+					clearCanvas();
+					
+					y = y - 10 * speed;
+
+					tY.innerHTML = y;
+
+					if(orientado=="der")
+						imgDerecha();
+					else
+						imgIzquiera();
+
+					canContext.drawImage(img,x,y);
+				}
+			}
+
+			//====================
+			//	THE S KEY
+			//====================
+			if (e.keyCode == 83 || e.keyCode == 40) {
+				if(y<320)
+				{	
+					clearCanvas();
+					y = y + 10 * speed;
+
+					tY.innerHTML = y;
+					
+					if(orientado=="der")
+						imgDerecha();
+					else
+						imgIzquiera();
+					
+					canContext.drawImage(img,x,y);
+				}
+			}
+
+			//====================
+			//	THE A KEY
+			//====================
+			if (e.keyCode == 65 || e.keyCode == 37) {
+				if(x>0)
+				{
+					clearCanvas();
+					x = x - 10 * speed;
+
+					tX.innerHTML = x;
+					
+					imgIzquiera();
+
+					canContext.drawImage(img,x,y);				}
+			}
+
+			//====================
+			//	THE D KEY
+			//====================
+			if (e.keyCode == 68 || e.keyCode == 39) {
+				if(x<500)
+				{
+					clearCanvas();
+					x = x + 10 * speed;
+
+					tX.innerHTML = x;
+					
+					imgDerecha();
+
+					canContext.drawImage(img,x,y);
+					
+				}
+			}
+
+			//====================
+			//	THE P KEY
+			//====================
+			if(e.keyCode == 80)
+			{
+				if(speed>=0)
+				{
+					speed -= speedStep;
+					tSpeed.innerHTML = speed;
+				}
+			}
+
+			//====================
+			//	THE O KEY
+			//====================
+			if(e.keyCode == 79)
+			{
+				speed += speedStep;
+				tSpeed.innerHTML = speed;
+			}
+		}
+
+		function clearCanvas() {
+			canvas.width = canvas.width;
+		}
+
+		function imgDerecha()
+		{
+			if(sw)
+			{	
+				img = document.getElementById("bici_der_2");
+				sw = false;
+			}
+			else
+			{	
+				img = document.getElementById("bici_der_1");
+				sw = true;
+			}
+
+			orientado = "der";
+		}
+
+		function imgIzquiera()
+		{
+			if(sw)
+			{	
+				img = document.getElementById("bici_izq_2");
+				sw = false;
+			}
+			else
+			{	
+				img = document.getElementById("bici_izq_1");
+				sw = true;
+			}
+
+			orientado = "izq";
+		}
+	</script>
+
+
+</head>
+
+<body>
+
+	<canvas id="miCanv" width="580" height="400" style="border:1px solid #000000;">Your browser does not support the HTML5 canvas tag.</canvas>
+
+	<p>Velocidad actual: <span id="spSpeed"></span></p>
+	<p>A: Izquierda</p>
+	<p>D: Derecha</p>
+	<p>O: Más velocidad</p>
+	<p>P: Menos velocidad</p>
+
+	<br/>
+
+	<p>X: <span id="spX"></span></p>
+	<p>Y: <span id="spY"></span></p>
+
+	<img id="bici_der_1" src="img/bici_der_1.png" alt="bici_der_1" style="border: 2px solid black;" hidden>
+	<img id="bici_der_2" src="img/bici_der_2.png" alt="bici_der_2" hidden>
+	<img id="bici_izq_1" src="img/bici_izq_1.png" alt="bici_izq_1" hidden>
+	<img id="bici_izq_2" src="img/bici_izq_2.png" alt="bici_der_2" hidden>
+
+
+</body>
+
+
+</html>
